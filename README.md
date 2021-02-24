@@ -25,7 +25,10 @@ There are three arguments:
     python collect.py {Youtube channel name} 0 {number of videos} 
 ```
 
-![Alt text](./images/howtouse.png?raw=true "How to use")
+![Alt text](./images/howtouse.png?raw=true "How to use in cmd")
+
+## Progress in CMD
+![Alt text](./images/progress.png?raw=true "Progress")
 
 ## Result
-![Alt text](./images/2.png?raw=true "Result")
+![Alt text](./images/results.png?raw=true "Result")

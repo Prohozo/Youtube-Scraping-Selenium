@@ -10,6 +10,15 @@ import pathlib
 from random import randint
 import pandas as pd
 
+# Check input
+while(True):
+    if sys.argv[2] != 0:
+        print('Your second input should be 0!')
+        sys.exit()
+    elif int(sys.argv[3]) < int(sys.argv[2]):
+        print('Your third input should be greater than 0!')
+        sys.exit()
+
 start_video = int(sys.argv[2])
 if not sys.argv[3] == 'end':
    end_video = int(sys.argv[3])
@@ -466,5 +475,5 @@ df_export.Dislike = pd.to_numeric(df_export.Dislike)
 df_export[df_export.Comment.isnull()]
 if str(df_export.Comment.dtype) == 'object':
     df_export.Comment = pd.to_numeric(df_export.Comment.str.replace(',',''))
-df_export.to_csv(f'{yt_channel}_full.csv', index=False)
+df_export.to_csv(f'{yt_channel}_full.csv', encoding='utf-8-sig',index=False)
 print('Done')
