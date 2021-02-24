@@ -412,18 +412,6 @@ driver.close()
 # Data cleaning
 print('------------------------------------------')
 print('Cleaning data.....')
-# file_path = str(pathlib.Path().absolute()) + f'\\{sys.argv[1]}_{sys.argv[3]}_to_{i}.csv'
-
-# while not os.path.exists(file_path):
-#     print('Wait a moment!')
-#     time.sleep(1)
-
-# if os.path.isfile(file_path):
-#     pass
-# else:
-#     raise ValueError("%s isn't a file!" % file_path)
-
-# df_export = pd.read_csv(f'{sys.argv[1]}_{sys.argv[3]}_to_{i}.csv')
 
 if 'Unnamed: 0' in df_export.columns:
     df_export.drop('Unnamed: 0',axis=1, inplace=True)
