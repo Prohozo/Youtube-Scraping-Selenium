@@ -13,7 +13,7 @@
 ```
 pip install -r requirements.txt
 ```
-## Install web driver
+## Install Webdriver(Chrome)
 - Check your Google Chrome version and download the corresponding version at https://chromedriver.chromium.org/downloads
 - Put that in C:\Program Files (x86) or you can change the path whatever you want at line 97 in collect.py
 
