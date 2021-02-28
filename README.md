@@ -1,12 +1,12 @@
 # VERSION 2
 ## Features
-- Automatic scrap data from youtube channel you want
+- Automatic scrape data from a youtube channel you want
 - Automatic skip youtube ads
 - Automatic clean all the data you collect
 - Automatic build dashboard
 ## Output example
-- :heart:[Marques Brownlee](mkbhd-app.herokuapp.com)
-- :blue_heart:[Dave2D](dave2d-app.herokuapp.com)
+- :heart:[Marques Brownlee](http://mkbhd-app.herokuapp.com)
+- :blue_heart:[Dave2D](http://dave2d-app.herokuapp.com)
 ## Video Demo
 [![Youtube Channel Dashboard](http://img.youtube.com/vi/dziScYK_M-w/0.jpg)](http://www.youtube.com/watch?v=dziScYK_M-w "Youtube Channel Dashboard Automation | Selenium🤝🏼Dash")
 ## Install packages
@@ -31,13 +31,13 @@ There are three arguments:
 python collect.py {Youtube channel name} 0 {number of videos} 
 ```
 
-![Alt text](./Readme_images/howtouse.png?raw=true "How to use in cmd")
+![Alt text](./README_IMAGES/howtouse.png?raw=true "How to use it in cmd")
 
 ## Progress in CMD
-![Alt text](./Readme_images/progress.png?raw=true "Progress")
+![Alt text](./README_IMAGES/progress.png?raw=true "Progress")
 
 ## Result
-![Alt text](./Readme_images/results.png?raw=true "Result")
+![Alt text](./README_IMAGES/results.png?raw=true "Result")
 
 ## Contact
 - [Twitter](https://twitter.com/prohozo)
