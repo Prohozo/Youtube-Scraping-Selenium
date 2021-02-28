@@ -7,7 +7,7 @@
 ## Output example
 - :heart:[Marques Brownlee](mkbhd-app.herokuapp.com)
 - :blue_heart:[Dave2D](dave2d-app.herokuapp.com)
-## Demo
+## Video Demo
 [![Youtube Channel Dashboard](http://img.youtube.com/vi/dziScYK_M-w/0.jpg)](http://www.youtube.com/watch?v=dziScYK_M-w "Youtube Channel Dashboard Automation | Selenium🤝🏼Dash")
 ## Install packages
 ```
@@ -31,14 +31,14 @@ There are three arguments:
 python collect.py {Youtube channel name} 0 {number of videos} 
 ```
 
-![Alt text](./images/howtouse.png?raw=true "How to use in cmd")
+![Alt text](./Readme_images/howtouse.png?raw=true "How to use in cmd")
 
 ## Progress in CMD
-![Alt text](./images/progress.png?raw=true "Progress")
+![Alt text](./Readme_images/progress.png?raw=true "Progress")
 
 ## Result
-![Alt text](./images/results.png?raw=true "Result")
+![Alt text](./Readme_images/results.png?raw=true "Result")
 
 ## Contact
-[Twitter](https://twitter.com/prohozo)
-<tandatvovan@gmail.com>
+- [Twitter](https://twitter.com/prohozo)
+- <tandatvovan@gmail.com>
