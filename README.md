@@ -40,5 +40,5 @@ python collect.py {Youtube channel name} 0 {number of videos}
 ![Alt text](./images/results.png?raw=true "Result")
 
 ## Contact
-<!-- - [Twitter](https://twitter.com/prohozo) -->
+- [Twitter](https://twitter.com/prohozo)
 - <tandatvovan@gmail.com>
