@@ -1,0 +1,70 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 30px;
+    margin-right: 30px;
+    background-color: #12151F;
+    color: #E1E2E2; 
+}
+.header_title{
+    text-align: center;
+    /* width: 50%; */
+    /* display: inline; */
+    font-size: 30px;
+    font-weight: 600;
+}
+.header_sub{
+    text-align: center;
+    /* width: 10%; */
+    /* display: inline; */
+    /* margin-left: 670px; */
+    opacity: 0.7;
+}
+.header{
+    margin-top:10px;
+    margin-bottom: 20px;
+    margin: auto;
+}
+.card{
+    background-color: #111111;
+    padding: 15px;
+    max-width: 280px;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 5px;
+    box-shadow: 2px 5px 7px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 25px;
+}
+.P1{
+    margin: 0;
+    padding: 0;
+    color: #05F4B7;
+    font-size: 38px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.P2{
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.card3{
+    padding: 0px;
+    margin-top: 25px;
+    margin-left: 10px;
+    box-shadow: 2px 5px 7px 4px rgba(0, 0, 0, 0.4);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.avatar {
+  vertical-align:middle;
+  margin: auto;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: inline-block;
+}

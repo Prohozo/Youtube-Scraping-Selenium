@@ -1,11 +1,17 @@
-### VERSION 1
+# VERSION 2
 ## Features
 - Automatic scrap data from youtube channel you want
 - Automatic skip youtube ads
-- Clean all the data you collect
+- Automatic clean all the data you collect
+- Automatic build dashboard
+## Output example
+- :heart:[Marques Brownlee](mkbhd-app.herokuapp.com)
+- :blue_heart:[Dave2D](dave2d-app.herokuapp.com)
+## Demo
+[![Youtube Channel Dashboard](http://img.youtube.com/vi/dziScYK_M-w/0.jpg)](http://www.youtube.com/watch?v=dziScYK_M-w "Youtube Channel Dashboard Automation | Selenium🤝🏼Dash")
 ## Install packages
 ```
-    pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 ## Install web driver
 - Check your Google Chrome version and download the corresponding version at https://chromedriver.chromium.org/downloads
@@ -14,15 +20,15 @@
 ## How to run it
 There are three arguments:
 
-- First arg: Youtube channel name, e.g.,"Bill Gates", "Marques Brownlee"
-    - If Youtube channel contains space you need put that in a quotation marks: ""
-- Second arg: 0, index show that the first video is the lastest video
+- **First arg**: Youtube channel name, e.g.,"Bill Gates", "Dave2D"
+    - If the Youtube channel name contains space you need to put that in a quotation marks: ""
+- **Second arg**: 0, index show that the first video is the lastest video
     - You should always type 0 if not there would be an error
-- Third arg: some number, e.g., 50, 10, 100
+- **Third arg**: some number, e.g., 50, 10, 100
     - Index show that how many video do you want to scraping, if you want all videos just type: end
 
 ```
-    python collect.py {Youtube channel name} 0 {number of videos} 
+python collect.py {Youtube channel name} 0 {number of videos} 
 ```
 
 ![Alt text](./images/howtouse.png?raw=true "How to use in cmd")
@@ -32,3 +38,7 @@ There are three arguments:
 
 ## Result
 ![Alt text](./images/results.png?raw=true "Result")
+
+## Contact
+[Twitter](https://twitter.com/prohozo)
+<tandatvovan@gmail.com>
