@@ -31,14 +31,14 @@ There are three arguments:
 python collect.py {Youtube channel name} 0 {number of videos} 
 ```
 
-![Alt text](./README_IMAGES/howtouse.png?raw=true "How to use it in cmd")
+![Alt text](./images/howtouse.png?raw=true "How to use it in cmd")
 
 ## Progress in CMD
-![Alt text](./README_IMAGES/progress.png?raw=true "Progress")
+![Alt text](./images/progress.png?raw=true "Progress")
 
 ## Result
-![Alt text](./README_IMAGES/results.png?raw=true "Result")
+![Alt text](./images/results.png?raw=true "Result")
 
 ## Contact
-- [Twitter](https://twitter.com/prohozo)
+<!-- - [Twitter](https://twitter.com/prohozo) -->
 - <tandatvovan@gmail.com>
