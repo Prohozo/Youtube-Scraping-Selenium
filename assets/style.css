@@ -67,4 +67,5 @@ body{
   height: 100px;
   border-radius: 50%;
   display: inline-block;
+  box-shadow: 2px 5px 7px 4px rgba(0, 0, 0, 0.4);
 }
