@@ -1,6 +1,6 @@
 import pandas as pd
 
-def clean_data(df, youtube_channel_name):
+def clean_data(df, youtube_channel_name,error_df):
     print('------------------------------------------')
     print('Cleaning data.....')
 
@@ -8,8 +8,8 @@ def clean_data(df, youtube_channel_name):
     if 'Unnamed: 0' in df.columns:
         df.drop('Unnamed: 0', axis=1, inplace=True)
     
-    # Drop videos that don't have time
-    df.drop(df[df.Time.isnull()].index.to_list(), inplace=True)
+    # 
+    error_df = df[df.Time=='0']
 
     # Format Time column
     df.loc[:, 'Time'] = df.Time.apply(lambda x: round(float(x.split(':')[0]) + (float(x.split(':')[1])/60), 2))
@@ -51,3 +51,4 @@ def clean_data(df, youtube_channel_name):
         df.Comment = pd.to_numeric(df.Comment.str.replace(',', ''))
 
     df.to_csv(f'{youtube_channel_name}_full.csv', encoding='utf-8-sig', index=False)
+    error_df.to_csv(f'{youtube_channel_name}_error.csv',encoding='utf-8-sig', index=False)

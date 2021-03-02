@@ -1,4 +1,4 @@
-# VERSION 2
+# VERSION 1
 ## Features
 - Automatic scrape data from a youtube channel you want
 - Automatic skip youtube ads

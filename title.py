@@ -3,16 +3,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import StaleElementReferenceException as er
 import pandas as pd
 import time
 import urllib
 import pathlib
 import os
 import sys
+    
 
-def collect_title(PATH,youtube_channel_name, end_video):
-    driver = webdriver.Chrome(PATH)
-    driver.maximize_window()
+def collect_title(driver,PATH,youtube_channel_name, end_video):
+    url_ls = []
+    
     # Search channel
     driver.get(f'https://www.youtube.com/results?search_query={youtube_channel_name}&sp=EgIQAg%253D%253D')
 
@@ -60,7 +62,6 @@ def collect_title(PATH,youtube_channel_name, end_video):
         subscribers = driver.find_element_by_xpath(
             '/html/body/ytd-app/div/ytd-page-manager/ytd-browse/div[3]/ytd-c4-tabbed-header-renderer/tp-yt-app-header-layout/div/tp-yt-app-header/div[2]/div[2]/div/div[1]/div/div[1]/yt-formatted-string')
         subcribers = subscribers.text[:-12]
-        print(subcribers)
     df = pd.DataFrame(data={'Title': []})
     video_ls = []
 
@@ -68,20 +69,26 @@ def collect_title(PATH,youtube_channel_name, end_video):
     screen_height = driver.execute_script("return window.screen.height;")
     scroll_time = 1
     temp = 0
+    # Wait 1 second and collect url of videos
+    time.sleep(1)
     videos = driver.find_elements_by_css_selector('#video-title')
 
     # Scroll down to the bottom and get all videos 
     if sys.argv[3] == 'end':
         while (temp != len(videos)):
             temp = len(videos)
-            driver.execute_script("window.scrollTo(0, {screen_height}*{scroll_time});".format(
-                screen_height=screen_height, scroll_time=scroll_time))
-            scroll_time += 1
-            driver.execute_script("window.scrollTo(0, {screen_height}*{scroll_time});".format(
-                screen_height=screen_height, scroll_time=scroll_time))
-            scroll_time += 1
-            time.sleep(0.5)
+            # driver.execute_script("window.scrollTo(0, {screen_height}*{scroll_time});".format(
+            #     screen_height=screen_height, scroll_time=scroll_time))
+            # scroll_time += 2
+            # driver.execute_script("window.scrollTo(0, {screen_height}*{scroll_time});".format(
+            #     screen_height=screen_height, scroll_time=scroll_time))
+            # scroll_time += 2
+            driver.find_element_by_tag_name('body').send_keys(Keys.END)
+            time.sleep(1)
+            driver.find_element_by_tag_name('body').send_keys(Keys.END)
+            time.sleep(1)
             videos = driver.find_elements_by_css_selector('#video-title')
+            print(f'Got {len(videos)}')
             time.sleep(scroll_pause_time)
         end_video = len(videos)
         print('Collected all videos!')
@@ -89,15 +96,14 @@ def collect_title(PATH,youtube_channel_name, end_video):
     else:
         while ((temp != len(videos)) & (len(videos) < end_video)):
             temp = len(videos)
-            time.sleep(0.5)
-            driver.execute_script("window.scrollTo(0, {screen_height}*{scroll_time});".format(
-                screen_height=screen_height, scroll_time=scroll_time))
-            scroll_time += 1
-            driver.execute_script("window.scrollTo(0, {screen_height}*{scroll_time});".format(
-                screen_height=screen_height, scroll_time=scroll_time))
-            scroll_time += 1
+            time.sleep(1)
+            driver.find_element_by_tag_name('body').send_keys(Keys.END)
+            time.sleep(1)
+            driver.find_element_by_tag_name('body').send_keys(Keys.END)
+            time.sleep(1)
             videos = driver.find_elements_by_css_selector('#video-title')
             time.sleep(scroll_pause_time)
+            
         print(f'Collected {end_video} videos: ')
 
     # Save video title to list
@@ -107,9 +113,15 @@ def collect_title(PATH,youtube_channel_name, end_video):
         videos = driver.find_elements_by_css_selector('#video-title')
     except:
         videos = driver.find_elements_by_css_selector('#video-title')
+    
     for video in videos:
         video_ls.append(video.text)
-
+        try:
+            url = video.get_attribute('href')
+        except(er):
+            url = video.get_attribute('href')
+        if ('/watch?v=' in url) and url not in url_ls:
+            url_ls.append(url)
     # Close
-    driver.close()
-    return video_ls,subcribers
+    # driver.close()
+    return video_ls,subcribers, url_ls, end_video

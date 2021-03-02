@@ -1,10 +1,12 @@
 import sys
 
-def check_input(len_video_list):
+def check_input():
 # Check input
     if sys.argv[2] != '0':
         print('Your second input should be 0!')
         sys.exit()
+    elif sys.argv[3] == 'end':
+        end_video = 100
     elif int(sys.argv[3]) < int(sys.argv[2]):
         print('Your third input should be greater than 0 ')
         sys.exit()
@@ -13,8 +15,6 @@ def check_input(len_video_list):
     start_video = int(sys.argv[2])
     if not sys.argv[3] == 'end':
         end_video = int(sys.argv[3])
-    else:
-        end_video = len_video_list
     return start_video, end_video
 
 # Check if there is an emoji

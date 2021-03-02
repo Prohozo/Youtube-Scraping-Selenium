@@ -142,9 +142,9 @@ def create_dashboard(df_export, yt_channel, subcribers):
             # y=0.01,
             # xanchor="right",
             # x=0.99,
-            title_font_size=8,
+            title_font_size=10,
             font=dict(
-                size=8,
+                size=10,
             ),
             itemsizing='trace'
         ),
