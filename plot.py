@@ -57,6 +57,7 @@ def create_dashboard(df_export, yt_channel, subcribers):
     )
 
     fig.update_traces(
+        mode='markers+lines',
         hovertemplate="<br>".join([
             'Date: <b>%{x}</b>',
             'Total views: <b>%{y:,}</b>',

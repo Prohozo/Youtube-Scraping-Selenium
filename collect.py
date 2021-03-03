@@ -98,13 +98,13 @@ start_video, end_video = check_input()
 video_ls, sub, url_ls, end_video = collect_title(
     driver, PATH, yt_channel, end_video)
 
-end = time.time()
-print(
-    f'Total time needed for scarping {end_video} video titles:', timer(start, end))
+# end = time.time()
+# print(
+#     f'Total time needed for scarping {end_video} video titles:', timer(start, end))
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 # Collect video information
-start = time.time()
+# start = time.time()
 
 search = driver.find_element_by_id('search')
 
@@ -124,74 +124,6 @@ dislike_ls = []
 comment_ls = []
 current_ad = ''
 i = start_video
-
-
-def collect(video_title, suffix, filter):
-    if is_emoji(video_title):
-        search.send_keys(remove_emoji(video_title) + ' '+suffix)
-    else:
-        search.send_keys(video_title+' '+suffix)
-    search.send_keys(Keys.ENTER)
-
-    # Select filter type
-    if filter == 'Rating':
-        filter_button = driver.find_element_by_xpath(
-            '/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[1]/div[2]/ytd-search-sub-menu-renderer/div[1]/div/ytd-toggle-button-renderer/a')
-        filter_button.click()
-        filters = driver.find_element_by_xpath(
-            '/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[1]/div[2]/ytd-search-sub-menu-renderer/div[1]/iron-collapse/div/ytd-search-filter-group-renderer[5]/ytd-search-filter-renderer[4]/a')
-        filters.click()
-    elif filter == 'Video':
-        filter_button = driver.find_element_by_xpath(
-            '/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[1]/div[2]/ytd-search-sub-menu-renderer/div[1]/div/ytd-toggle-button-renderer/a')
-        filter_button.click()
-        filters = driver.find_element_by_xpath(
-            '/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-renderer/div/ytd-section-list-renderer/div[1]/div[2]/ytd-search-sub-menu-renderer/div[1]/iron-collapse/div/ytd-search-filter-group-renderer[2]/ytd-search-filter-renderer[1]/a')
-        filters.click()
-    elif filter == 'Shortcut':
-        str = ' '
-        video_title_2 = str.join(video_title.split(' ', 3)[:3])
-        print('Title after cut: ', video_title_2)
-        search.send_keys(Keys.CONTROL, "a", Keys.DELETE)
-        search.send_keys(video_title_2+' '+suffix)
-        search.send_keys(Keys.ENTER)
-    time.sleep(0.5)
-
-    images = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located(
-        (By.XPATH, '//*[@id="video-title"]/yt-formatted-string'))
-    )
-    print('All videos have chosen!')
-
-    for im in images:
-        print(im.text)
-        time.sleep(0.1)
-        if im.text == video_title:
-            print('-->', im.text)
-            image = im
-            break
-
-    if image.text == video_title:
-        driver.execute_script("window.scrollTo(0, 800);")
-        time.sleep(0.5)
-        driver.find_element_by_tag_name(
-            'body').send_keys(Keys.CONTROL + Keys.HOME)
-        time.sleep(1)
-        try:
-            image.click()
-            print("-->Clicked")
-        except:
-            print('Opps')
-            insert_to_df()
-    else:
-        driver.find_element_by_tag_name(
-            'body').send_keys(Keys.CONTROL + Keys.HOME)
-        print('------------')
-        print(image.text+" :", type(image.text))
-        print(video_title+" :", type(video_title))
-    time.sleep(0.5)
-    if i == start_video:
-      driver.find_element_by_tag_name('body').send_keys('m')
-
 
 for url in url_ls[start_video:end_video]:
     driver.get(url)
