@@ -10,7 +10,7 @@ from threading import Timer
 import os
 
 def create_dashboard(df_export, yt_channel, subcribers):
-    
+    df_export['small_title'] = df_export.Title.apply(lambda x: ' '.join(x.split(' ')[:8])+'...')
     app = dash.Dash(
         __name__,
         external_stylesheets=[os.path.join(pathlib.Path().parent.absolute(), 'assets\\style.css')]
@@ -68,15 +68,16 @@ def create_dashboard(df_export, yt_channel, subcribers):
         df_export.sort_values(by=['View'])[-5:],
         orientation='h',
         x='View',
-        y='Title',
+        y='small_title',
         text='View',
         title='Top 5 videos with most views',
+        custom_data=['Title'],
         color_discrete_sequence=['#05F4B7', '#086972', '#071a52'])
 
     fig2.update_traces(
         texttemplate='%{text:.2s}',
         textposition='inside',
-        hovertemplate='Title: <b>%{y}</b> <br>View: <b>%{x:,}</b>',
+        hovertemplate='Title: <b>%{customdata[0]}</b> <br>View: <b>%{x:,}</b>',
     )
 
     fig2.update_layout(
@@ -111,14 +112,15 @@ def create_dashboard(df_export, yt_channel, subcribers):
         orientation='h',
         barmode='group',
         x=["Like", "Dislike", "Comment"],
-        y="Title",
+        y="small_title",
         title="Top 5 videos with most likes",
+        custom_data = ['Title'],
         color_discrete_sequence=['#05F4B7', '#b31e6f', '#ee5a5a', ])
 
     fig3.update_traces(
         texttemplate='%{x:.2s}',
         textposition='inside',
-        hovertemplate='Title: <b>%{y}</b> <br>Engagement: <b>%{x:,}</b>',
+        hovertemplate='Title: <b>%{customdata[0]}</b> <br>Engagement: <b>%{x:,}</b>',
     )
 
     fig3.update_layout(

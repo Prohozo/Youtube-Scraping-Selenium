@@ -13,10 +13,12 @@ from title import collect_title
 from check import check_input, is_emoji, remove_emoji
 from plot import create_dashboard
 
+
 def timer(start, end):
    hours, rem = divmod(end-start, 3600)
    minutes, seconds = divmod(rem, 60)
    return "{:0>2}:{:0>2}:{:05.2f}".format(int(hours), int(minutes), seconds)
+
 
 def insert_to_df():
     try:
@@ -78,8 +80,8 @@ def insert_to_df():
     except ValueError:
         print("Something's wrong with Comment list")
 
-
     # df_export.to_csv(f'{sys.argv[1]}_{sys.argv[3]}_to_{i}.csv', encoding='utf-8-sig', index=False)
+
 
 PATH = "C:\Program Files (x86)\chromedriver.exe"
 driver = webdriver.Chrome(PATH)
@@ -93,10 +95,12 @@ id_ls = []
 
 # Check input
 start_video, end_video = check_input()
-video_ls, sub, url_ls, end_video = collect_title(driver,PATH, yt_channel, end_video)
+video_ls, sub, url_ls, end_video = collect_title(
+    driver, PATH, yt_channel, end_video)
 
 end = time.time()
-print(f'Total time needed for scarping {end_video} video titles:', timer(start, end))
+print(
+    f'Total time needed for scarping {end_video} video titles:', timer(start, end))
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 # Collect video information
@@ -104,7 +108,8 @@ start = time.time()
 
 search = driver.find_element_by_id('search')
 
-d = {'ID':[], 'Title': [], 'Time': [], 'View': [], 'Date': [],'Like': [], 'Dislike': [], 'Comment': [],'Url': []}
+d = {'ID': [], 'Title': [], 'Time': [], 'View': [], 'Date': [],
+     'Like': [], 'Dislike': [], 'Comment': [], 'Url': []}
 df_export = pd.DataFrame(data=d)
 df_error = pd.DataFrame(data=d)
 
@@ -117,8 +122,9 @@ date_ls = []
 like_ls = []
 dislike_ls = []
 comment_ls = []
-
+current_ad = ''
 i = start_video
+
 
 def collect(video_title, suffix, filter):
     if is_emoji(video_title):
@@ -167,7 +173,8 @@ def collect(video_title, suffix, filter):
     if image.text == video_title:
         driver.execute_script("window.scrollTo(0, 800);")
         time.sleep(0.5)
-        driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + Keys.HOME)
+        driver.find_element_by_tag_name(
+            'body').send_keys(Keys.CONTROL + Keys.HOME)
         time.sleep(1)
         try:
             image.click()
@@ -185,79 +192,37 @@ def collect(video_title, suffix, filter):
     if i == start_video:
       driver.find_element_by_tag_name('body').send_keys('m')
 
-for title in video_title_list[start_video:end_video]:
-    try:
-        print('Collecting...')
-        time.sleep(0.5)
-        collect(title, suffix=yt_channel, filter='')
-    except:
-        print('-----------------------')
-        try:
-            print("Try again.....")
-            search.send_keys(Keys.CONTROL, "a", Keys.DELETE)
-            collect(title, suffix=yt_channel, filter='')
-        except:
-            try:
-                print('-----------------------')
-                print("Try again 2nd time (No youtube username, no filter)")
-                search.send_keys(Keys.CONTROL, "a", Keys.DELETE)
-                collect(title, suffix='', filter='')
-            except:
-                try:
-                    print('-----------------------')
-                    print("Try again 3rd time (No youtube username, filter by rating)")
-                    search.send_keys(Keys.CONTROL, "a", Keys.DELETE)
-                    collect(title, suffix='', filter='Rating')
-                except:
-                    try:
-                        print('-----------------------')
-                        print("Try again 4th time (Have youtube username, filter by rating)")
-                        search.send_keys(Keys.CONTROL, "a", Keys.DELETE)
-                        collect(title, suffix=yt_channel, filter='Rating')
-                    except:
-                        try:
-                            print('-----------------------')
-                            print("Try again 5th time (Have youtube username, filter by video)")
-                            search.send_keys(Keys.CONTROL, "a", Keys.DELETE)
-                            collect(title, suffix=yt_channel, filter='Video')
-                        except:
-                            try:
-                                print('-----------------------')
-                                print("Try again 6th time (Have youtube username, filter by shortcut)")
-                                search.send_keys(
-                                    Keys.CONTROL, "a", Keys.DELETE)
-                                collect(title, suffix=yt_channel,
-                                        filter='Shortcut')
-                            except:
-                                print("Can't find the video!")
-                                print(
-                                    f"Stop at video {i}/{len(video_title_list)}: ", title)
-                                insert_to_df()
-                                driver.close()
+
+for url in url_ls[start_video:end_video]:
+    driver.get(url)
     # Indentify there is an ad or not and skip it
     try:
-        ad = driver.find_element_by_xpath(
-            '/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[1]/div/div/div/ytd-player/div/div/div[17]/div[1]/div[2]/span[1]/div')
-        print('There is a ad!')
+        ad = driver.find_element_by_class_name(
+            'ytp-ad-player-overlay-instream-info')
+        print(ad.text)
+        current_ad = ad.text
+        print('There is an ad!')
         time.sleep(5)
-        skip_button = driver.find_element_by_class_name('ytp-ad-skip-button-container')
+        skip_button = driver.find_element_by_class_name(
+            'ytp-ad-skip-button-container')
         print('Found skip button!')
         skip_button.click()
     except:
         print('There is no ad!')
-    
+
     # Get elements of video -> Print results
     print('------------------------------------------')
     print(f'Video {i+1}:')
 
     id_ls.append(url_ls[i][32:])
     print(f'Id: {url_ls[i][32:]}')
-    
-    title_ls.append(title)
-    print("Video:", title)
+
+    title_ls.append(video_title_list[i])
+    print("Video:", video_title_list[i])
 
     try:
-        view = driver.find_element_by_xpath('//*[@id="count"]/yt-view-count-renderer/span[1]')
+        view = driver.find_element_by_xpath(
+            '//*[@id="count"]/yt-view-count-renderer/span[1]')
         view_ls.append(view.text[:-6])
         print("Views: ", view.text[:-6])
     except:
@@ -274,7 +239,8 @@ for title in video_title_list[start_video:end_video]:
         print("Date: Unknown!")
 
     try:
-        like = driver.find_element_by_xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[3]/div/ytd-menu-renderer/div/ytd-toggle-button-renderer[1]/a/yt-formatted-string')
+        like = driver.find_element_by_xpath(
+            '/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[3]/div/ytd-menu-renderer/div/ytd-toggle-button-renderer[1]/a/yt-formatted-string')
         if like.text == 'LIKE':
             like_ls.append(0)
             print("Views: 0")
@@ -286,7 +252,8 @@ for title in video_title_list[start_video:end_video]:
         print("Like: 0")
 
     try:
-        dislike = driver.find_element_by_xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[3]/div/ytd-menu-renderer/div/ytd-toggle-button-renderer[2]/a/yt-formatted-string')
+        dislike = driver.find_element_by_xpath(
+            '/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[5]/div[2]/ytd-video-primary-info-renderer/div/div/div[3]/div/ytd-menu-renderer/div/ytd-toggle-button-renderer[2]/a/yt-formatted-string')
         if dislike.text == 'DISLIKE':
             dislike_ls.append(0)
             print("Dislike: 0")
@@ -296,14 +263,15 @@ for title in video_title_list[start_video:end_video]:
     except:
         dislike_ls.append(0)
         print("Dislike: 0")
-    
+
     print(f'Url: {url_ls[i]}')
 
     # Scroll down to get number of comment
     driver.execute_script("window.scrollTo(0, 500);")
     time.sleep(1)
     try:
-        comment = driver.find_element_by_xpath('/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[1]/h2/yt-formatted-string')
+        comment = driver.find_element_by_xpath(
+            '/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/ytd-comments/ytd-item-section-renderer/div[1]/ytd-comments-header-renderer/div[1]/h2/yt-formatted-string')
         comment_ls.append(comment.text[:-9])
         print("Comment: ", comment.text[:-9])
     except:
@@ -317,29 +285,29 @@ for title in video_title_list[start_video:end_video]:
     try:
         video_time = driver.find_element_by_class_name('ytp-time-duration')
         if video_time.text == '':
-            time_ls.append('0:00')
+            time_ad = int(current_ad.split('\n')[1][-2:])
+            time.sleep(time_ad+1)
+            driver.find_element_by_tag_name('body').send_keys(Keys.ARROW_RIGHT)
+            time_ls.append(str(video_time.text))
         else:
-            time_ls.append(video_time.text)
+            time_ls.append(str(video_time.text))
         print("Time: ", video_time.text)
     except:
-        time_ls.append(0)
+        time_ls.append('0')
         print("Time: 0")
-
+    i += 1
     print('------------------------------------------')
 
-    # Clear search bar
-    search = driver.find_element_by_id('search')
-    search.send_keys(Keys.CONTROL, "a", Keys.DELETE)
-    i += 1
 
 insert_to_df()
 
 end = time.time()
-print(f'Total time needed for scraping {end_video - start_video} videos:', timer(start, end))
+print(
+    f'Total time needed for scraping {end_video - start_video} videos:', timer(start, end))
 driver.close()
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 # Data cleaning
-clean_data(df_export, yt_channel,df_error)
+clean_data(df_export, yt_channel, df_error)
 # Create Dashboard
 create_dashboard(df_export, yt_channel, sub)
