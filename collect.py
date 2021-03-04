@@ -28,43 +28,31 @@ def insert_to_df():
 
     try:
         df_export.Title = title_ls
-        # print("Title list: ", len(title_ls))
-        # print("Title list is OK")
     except ValueError:
         print("Something's wrong with title list")
 
     try:
         df_export.Time = time_ls
-        # print("Time list: ", len(time_ls))
-        # print("Time list is OK")
     except ValueError:
         print("Something's wrong with time list")
 
     try:
         df_export.View = view_ls
-        # print("View list: ", len(view_ls))
-        # print("View list is OK")
     except ValueError:
         print("Something's wrong with view list")
 
     try:
         df_export.Date = date_ls
-        # print("Date list: ", len(date_ls))
-        # print("Date list is OK")
     except ValueError:
         print("Something's wrong with date list")
 
     try:
         df_export.Like = like_ls
-        # print("Like list: ", len(like_ls))
-        # print("Like list is OK")
     except ValueError:
         print("Something's wrong with like list")
 
     try:
         df_export.Dislike = dislike_ls
-        # print("Dislike list: ", len(dislike_ls))
-        # print("Dislike list is OK")
     except ValueError:
         print("Something's wrong with dislike list")
 
@@ -75,13 +63,8 @@ def insert_to_df():
 
     try:
         df_export.Comment = comment_ls
-        # print("Comment list: ", len(comment_ls))
-        # print("Comment list is OK")
     except ValueError:
         print("Something's wrong with Comment list")
-
-    # df_export.to_csv(f'{sys.argv[1]}_{sys.argv[3]}_to_{i}.csv', encoding='utf-8-sig', index=False)
-
 
 PATH = "C:\Program Files (x86)\chromedriver.exe"
 driver = webdriver.Chrome(PATH)
@@ -98,18 +81,11 @@ start_video, end_video = check_input()
 video_ls, sub, url_ls, end_video = collect_title(
     driver, PATH, yt_channel, end_video)
 
-# end = time.time()
-# print(
-#     f'Total time needed for scarping {end_video} video titles:', timer(start, end))
-
 #--------------------------------------------------------------------------------------------------------------------------------------------------
-# Collect video information
-# start = time.time()
 
 search = driver.find_element_by_id('search')
 
-d = {'ID': [], 'Title': [], 'Time': [], 'View': [], 'Date': [],
-     'Like': [], 'Dislike': [], 'Comment': [], 'Url': []}
+d = {'ID': [], 'Title': [], 'Time': [], 'View': [], 'Date': [], 'Like': [], 'Dislike': [], 'Comment': [], 'Url': []}
 df_export = pd.DataFrame(data=d)
 df_error = pd.DataFrame(data=d)
 

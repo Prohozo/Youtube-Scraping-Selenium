@@ -9,11 +9,17 @@ from datetime import date as dt
 from threading import Timer
 import os
 
-def create_dashboard(df_export, yt_channel, subcribers):
-    df_export['small_title'] = df_export.Title.apply(lambda x: ' '.join(x.split(' ')[:8])+'...')
+def create_dashboard(df_export, yt_channel, subscribers):
+    df_export['small_title'] = df_export.Title.apply(
+        lambda x: ' '.join(x.split(' ')[:8])+'...')
+    minute = str(round(df_export.Time.mean()-df_export.Time.mean() % 1))
+    second = str(round(df_export.Time.mean() % 1*60))
+    if len(second) == 1:
+        second = '0' + second
     app = dash.Dash(
         __name__,
-        external_stylesheets=[os.path.join(pathlib.Path().parent.absolute(), 'assets\\style.css')]
+        external_stylesheets=[os.path.join(
+            pathlib.Path().parent.absolute(), 'assets\\style.css')]
     )
 
     colors = {
@@ -115,7 +121,7 @@ def create_dashboard(df_export, yt_channel, subcribers):
         x=["Like", "Dislike", "Comment"],
         y="small_title",
         title="Top 5 videos with most likes",
-        custom_data = ['Title'],
+        custom_data=['Title'],
         color_discrete_sequence=['#05F4B7', '#b31e6f', '#ee5a5a', ])
 
     fig3.update_traces(
@@ -164,7 +170,9 @@ def create_dashboard(df_export, yt_channel, subcribers):
     )
 
     today = f'Updated {dt.today().strftime("%B %d, %Y")}'
+    df_export.Date = pd.to_datetime(df_export.Date)
 
+    df_export['Year'] = df_export['Date'].apply(lambda x: x.year)
     app.layout = html.Div([
         html.Div([
             html.Div([
@@ -191,17 +199,14 @@ def create_dashboard(df_export, yt_channel, subcribers):
                 html.P(f'{df_export.View.sum():,}', className='P1')
             ], className='card', style={'display': 'inline-block', 'width': '20%'}),
 
-
-
             html.Div([
                 html.P('Average video duration', className='P2'),
-                html.P(str(round(df_export.Time.mean()-df_export.Time.mean() % 1))+':' +
-                    str(round(df_export.Time.mean() % 1*60)), className='P1')
+                html.P(minute+':'+second, className='P1')
             ], className='card', style={'display': 'inline-block', 'width': '20%', 'float': 'right'}),
 
             html.Div([
                 html.P('Subscribers', className='P2'),
-                html.P(f'{subcribers}', className='P1')
+                html.P(f'{subscribers}', className='P1')
             ], className='card', style={'display': 'inline-block', 'width': '20%', 'float': 'right'}),
         ]),
 

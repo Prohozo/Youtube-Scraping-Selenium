@@ -58,6 +58,8 @@ body{
     box-shadow: 2px 5px 7px 4px rgba(0, 0, 0, 0.4);
     border-radius: 25px;
     overflow: hidden;
+    color: '#12151F';
+    background-color: '#12151F';
 }
 
 .avatar {
