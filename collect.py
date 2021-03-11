@@ -2,6 +2,7 @@ import sys
 import time
 import pandas as pd
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -84,7 +85,26 @@ def insert_to_df():
 
 
 PATH = "C:\Program Files (x86)\chromedriver.exe"
-driver = webdriver.Chrome(PATH)
+options = Options()
+options.add_argument("start-maximized")
+
+options.add_argument("enable-automation")
+
+# options.add_argument("--headless")
+
+options.add_argument("--no-sandbox")
+
+options.add_argument("--disable-infobars")
+
+options.add_argument("--disable-dev-shm-usage")
+
+options.add_argument("--disable-browser-side-navigation")
+
+options.add_argument("--disable-gpu")
+
+options.add_argument("enable-features=NetworkServiceInProcess")
+
+driver = webdriver.Chrome(PATH, options=options)
 driver.maximize_window()
 start = time.time()
 
@@ -100,7 +120,7 @@ video_ls, sub, url_ls, end_video = collect_title(
 
 # end = time.time()
 # print(
-#     f'Total time needed for scarping {end_video} video titles:', timer(start, end))
+#     f'Time needed for scarping {end_video} video titles:', timer(start, end))
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------
 # Collect video information
@@ -108,8 +128,7 @@ video_ls, sub, url_ls, end_video = collect_title(
 
 search = driver.find_element_by_id('search')
 
-d = {'ID': [], 'Title': [], 'Time': [], 'View': [], 'Date': [],
-     'Like': [], 'Dislike': [], 'Comment': [], 'Url': []}
+d = {'ID': [], 'Title': [], 'Time': [], 'View': [], 'Date': [], 'Like': [], 'Dislike': [], 'Comment': [], 'Url': []}
 df_export = pd.DataFrame(data=d)
 df_error = pd.DataFrame(data=d)
 
@@ -124,26 +143,26 @@ dislike_ls = []
 comment_ls = []
 current_ad = ''
 i = start_video
-
 for url in url_ls[start_video:end_video]:
     driver.get(url)
     # Indentify there is an ad or not and skip it
     try:
         ad = driver.find_element_by_class_name(
             'ytp-ad-player-overlay-instream-info')
-        print(ad.text)
-        current_ad = ad.text
-        print('There is an ad!')
+        # print(ad.text)
+        # current_ad = ad.text
+        # print('There is an ad!')
         time.sleep(5)
         skip_button = driver.find_element_by_class_name(
             'ytp-ad-skip-button-container')
-        print('Found skip button!')
+        # print('Found skip button!')
         skip_button.click()
     except:
-        print('There is no ad!')
+        # print('There is no ad!')
+        pass
 
     # Get elements of video -> Print results
-    print('------------------------------------------')
+    # print('------------------------------------------')
     print(f'Video {i+1}:')
 
     id_ls.append(url_ls[i][32:])
@@ -207,7 +226,7 @@ for url in url_ls[start_video:end_video]:
         comment_ls.append(comment.text[:-9])
         print("Comment: ", comment.text[:-9])
     except:
-        comment_ls.append(0)
+        comment_ls.append('0')
         print('Comment: Comments in this video are turned off')
 
     # Click -> arrow key to find video time
@@ -220,6 +239,7 @@ for url in url_ls[start_video:end_video]:
             time_ad = int(current_ad.split('\n')[1][-2:])
             time.sleep(time_ad+1)
             driver.find_element_by_tag_name('body').send_keys(Keys.ARROW_RIGHT)
+            video_time = driver.find_element_by_class_name('ytp-time-duration')
             time_ls.append(str(video_time.text))
         else:
             time_ls.append(str(video_time.text))
@@ -230,12 +250,10 @@ for url in url_ls[start_video:end_video]:
     i += 1
     print('------------------------------------------')
 
-
 insert_to_df()
 
 end = time.time()
-print(
-    f'Total time needed for scraping {end_video - start_video} videos:', timer(start, end))
+print(f'Time needed for scraping {end_video - start_video} videos:', timer(start, end))
 driver.close()
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------

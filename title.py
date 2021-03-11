@@ -107,7 +107,7 @@ def collect_title(driver,PATH,youtube_channel_name, end_video):
         print(f'Collected {end_video} videos: ')
 
     # Save video title to list
-    print('Processing..........')
+    # print('Processing..........')
     time.sleep(1)
     try:
         videos = driver.find_elements_by_css_selector('#video-title')
