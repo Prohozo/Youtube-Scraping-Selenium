@@ -38,6 +38,10 @@ python collect.py {Youtube channel name} 0 {number of videos}
 
 ## Result
 ![Alt text](./images/results.png?raw=true "Result")
+![Alt text](./images/dashboard.png?raw=true "Dashboard")
+
+## Diagram
+![Alt text](./images/Diagram.png?raw=true "Diagram")
 
 ## Contact
 - [Twitter](https://twitter.com/prohozo)
