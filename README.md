@@ -8,7 +8,7 @@
 - :heart:[Marques Brownlee](http://mkbhd-app.herokuapp.com)
 - :blue_heart:[Dave2D](http://dave2d-app.herokuapp.com)
 ## Video Demo
-[![Youtube Channel Dashboard](http://img.youtube.com/vi/dziScYK_M-w/0.jpg)](http://www.youtube.com/watch?v=dziScYK_M-w "Youtube Channel Dashboard Automation | Selenium🤝🏼Dash")
+[![Youtube Channel Dashboard](http://img.youtube.com/vi/dziScYK_M-w/0.jpg)](https://youtu.be/JZj2p5w9ryY "Youtube Channel Dashboard Automation | Selenium🤝🏼Dash")
 ## Install packages
 ```
 pip install -r requirements.txt
