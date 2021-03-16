@@ -44,5 +44,4 @@ python collect.py {Youtube channel name} 0 {number of videos}
 ![Alt text](./images/Diagram.png?raw=true "Diagram")
 
 ## Contact
-- [Twitter](https://twitter.com/prohozo)
 - <tandatvovan@gmail.com>
